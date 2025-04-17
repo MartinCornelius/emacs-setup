@@ -12,6 +12,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
+(electric-pair-mode 1)
 
 ;; Use spaces god dammit
 (setq-default indent-tabs-mode nil) ;; No tabs in here
@@ -69,10 +70,10 @@
   :bind-keymap
   ("C-c p" . projectile-command-map))
 ;; File tree sidebar
-(use-package treemacs
-  :ensure t
-  :bind
-  ("C-x t t" . treemacs))
+;;(use-package treemacs
+;;:ensure t
+;;:bind
+;;("C-x t t" . treemacs))
 ;; Fuzzy finding + better M-x
 (use-package vertico
     :ensure t
