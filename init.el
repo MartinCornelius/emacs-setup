@@ -98,7 +98,7 @@
   (corfu-auto t)
   (corfu-auto-delay 0.2)
   (corfu-auto-prefix 1)
-  (corfu-popupinfo-mode t)
+  (corfu-popupinfo-mode -1) ;; if t it will have a constant pop-up
   :init
   (global-corfu-mode))
 (use-package eldoc-box
