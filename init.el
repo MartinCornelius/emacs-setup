@@ -25,6 +25,7 @@
 ;; Package setup
 (require 'package)
 (setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
@@ -69,9 +70,7 @@
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-peacock t))
-
-;; ========= MAYBE PILE =========
+  (load-theme 'doom-badger t))
 
 ;; Syntax highlighting
 (use-package typescript-mode :mode "\\.ts\\'")
@@ -96,9 +95,9 @@
 (use-package corfu
   :custom
   (corfu-auto t)
-  (corfu-auto-delay 0.2)
+  (corfu-auto-delay 0.1)
   (corfu-auto-prefix 1)
-  (corfu-popupinfo-mode -1) ;; if t it will have a constant pop-up
+  (corfu-popupinfo-mode t) ;; if t it will have a constant pop-up
   :init
   (global-corfu-mode))
 (use-package eldoc-box
@@ -108,6 +107,10 @@
 (global-set-key (kbd "C-c h") #'eldoc-box-help-at-point)
 
 ;; Errors diagnostics
+(setq flymake-no-changes-timeout 0.1
+      flymake-start-on-save-buffer t
+      flymake-start-on-flymake-mode t)
 (use-package flymake
   :hook (eglot-managed-mode . flymake-mode))
 (global-set-key (kbd "C-c e") #'flymake-show-buffer-diagnostics)
+
