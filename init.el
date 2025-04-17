@@ -33,6 +33,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
+(setq use-package-always-ensure t)
 
 ;; Evil mode :-)
 (use-package evil
@@ -62,13 +63,51 @@
 (use-package consult
   :ensure t)
 
-;; ========= MAYBE PILE =========
-
 ;; Colorscheme
 (use-package doom-themes
   :ensure t
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
-  (load-theme 'doom-one t)
-  (setq doom-themes-treemacs-theme "doom-atom"))
+  (load-theme 'doom-peacock t))
+
+;; ========= MAYBE PILE =========
+
+;; Syntax highlighting
+(use-package typescript-mode :mode "\\.ts\\'")
+
+;; Use devdocs-install to install documenation for std packages
+(use-package devdocs
+  :bind (("C-c d" . devdocs-lookup)))
+
+;; Good for activating python environments
+(use-package pyvenv
+  :ensure t
+  :config
+  (setq pyvenv-mode 1))
+
+;; LSP
+(use-package eglot
+  :hook ((c++-mode python-mode typescript-mode js-mode web-mode csharp-mode) . eglot-ensure)
+  :config
+  (setq eglot-autoshutdown t))
+
+;; Autocompletion
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 1)
+  (corfu-popupinfo-mode t)
+  :init
+  (global-corfu-mode))
+(use-package eldoc-box
+  :after corfu
+  :hook (eglot-managed-mode . eldoc-box-hover-mode))
+(setq eldoc-echo-area-use-multiline-p t)
+(global-set-key (kbd "C-c h") #'eldoc-box-help-at-point)
+
+;; Errors diagnostics
+(use-package flymake
+  :hook (eglot-managed-mode . flymake-mode))
+(global-set-key (kbd "C-c e") #'flymake-show-buffer-diagnostics)
