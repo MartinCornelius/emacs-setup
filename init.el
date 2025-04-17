@@ -6,18 +6,16 @@
 (setq make-backup-files nil)
 (setq ring-bell-function 'ignore)
 (prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
-(electric-pair-mode 1)
 
 ;; Use spaces god dammit
 (setq-default indent-tabs-mode nil) ;; No tabs in here
 (setq-default tab-width-4)
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
+(electric-pair-mode 1) ;; Auto brackets
 
 ;; Font
 (set-face-attribute 'default nil
@@ -42,38 +40,16 @@
   :config
   (evil-mode 1))
 
-;; LSP & autocompletion
-(use-package lsp-mode :ensure t :hook ((prog-mode . lsp)))
-;; Provides all the goodies ;)
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-sideline-enable t
-	lsp-ui-doc-enable t))
-(use-package dap-mode
-  :ensure t
-  :after lsp-mode
-  :config
-  (dap-auto-configure-mode))
-;; Inline suggestions
-(use-package company :ensure t :hook (prog-mode . company-mode))
-(use-package flycheck :ensure t :init (global-flycheck-mode))
-
-;; ========= MAYBE PILE =========
 ;; Git
 (use-package magit :ensure t)
+
 ;; Open project and do project-wide searches
 (use-package projectile
   :ensure t
   :init (projectile-mode)
   :bind-keymap
   ("C-c p" . projectile-command-map))
-;; File tree sidebar
-;;(use-package treemacs
-;;:ensure t
-;;:bind
-;;("C-x t t" . treemacs))
+
 ;; Fuzzy finding + better M-x
 (use-package vertico
     :ensure t
@@ -83,6 +59,10 @@
     :ensure t
     :custom
     (completion-styles '(orderless)))
+(use-package consult
+  :ensure t)
+
+;; ========= MAYBE PILE =========
 
 ;; Colorscheme
 (use-package doom-themes
