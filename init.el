@@ -91,3 +91,9 @@
         doom-themes-enable-italic t)
   (load-theme 'doom-one t)
   (setq doom-themes-treemacs-theme "doom-atom"))
+
+;; For python environments
+(use-package pyvenv
+  :ensure t
+  :config
+  (setq pyvenv-mode 1))
