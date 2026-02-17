@@ -13,104 +13,17 @@
 
 ;; Use spaces god dammit
 (setq-default indent-tabs-mode nil) ;; No tabs in here
-(setq-default tab-width-4)
+(setq-default tab-width 4)
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
 (electric-pair-mode 1) ;; Auto brackets
 
+;; Fido mode
+(fido-vertical-mode t)
+
 ;; Font
 (set-face-attribute 'default nil
-		    :family "Consolas"
-		    :height 140)            ;; 140 = 14pt
+		    :family "Hack"
+		    :height 120)            ;; 140 = 14pt
 
-;; Package setup
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
-
-;; Install use-package (if not present)
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-;; Evil mode :-)
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
-
-;; Git
-(use-package magit :ensure t)
-
-;; Open project and do project-wide searches
-(use-package projectile
-  :ensure t
-  :init (projectile-mode)
-  :bind-keymap
-  ("C-c p" . projectile-command-map))
-
-;; Fuzzy finding + better M-x
-(use-package vertico
-    :ensure t
-    :init
-    (vertico-mode))
-(use-package orderless
-    :ensure t
-    :custom
-    (completion-styles '(orderless)))
-(use-package consult
-  :ensure t)
-
-;; Colorscheme
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme 'doom-badger t))
-
-;; Syntax highlighting
-(use-package typescript-mode :mode "\\.ts\\'")
-
-;; Use devdocs-install to install documenation for std packages
-(use-package devdocs
-  :bind (("C-c d" . devdocs-lookup)))
-
-;; Good for activating python environments
-(use-package pyvenv
-  :ensure t
-  :config
-  (setq pyvenv-mode 1))
-
-;; LSP
-(use-package eglot
-  :hook ((c++-mode python-mode typescript-mode js-mode web-mode csharp-mode) . eglot-ensure)
-  :config
-  (setq eglot-autoshutdown t))
-
-;; Autocompletion
-(use-package corfu
-  :custom
-  (corfu-auto t)
-  (corfu-auto-delay 0.1)
-  (corfu-auto-prefix 1)
-  (corfu-popupinfo-mode t) ;; if t it will have a constant pop-up
-  :init
-  (global-corfu-mode))
-(use-package eldoc-box
-  :after corfu
-  :hook (eglot-managed-mode . eldoc-box-hover-mode))
-(setq eldoc-echo-area-use-multiline-p t)
-(global-set-key (kbd "C-c h") #'eldoc-box-help-at-point)
-
-;; Errors diagnostics
-(setq flymake-no-changes-timeout 0.1
-      flymake-start-on-save-buffer t
-      flymake-start-on-flymake-mode t)
-(use-package flymake
-  :hook (eglot-managed-mode . flymake-mode))
-(global-set-key (kbd "C-c e") #'flymake-show-buffer-diagnostics)
-
+;; Resize bug
+(setq frame-resize-pixelwise t)
