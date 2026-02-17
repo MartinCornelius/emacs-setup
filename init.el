@@ -20,6 +20,10 @@
 ;; Fido mode
 (fido-vertical-mode t)
 
+;; 80 column ruler
+(setopt display-fill-column-indicator-column 80)
+(global-display-fill-column-indicator-mode)
+
 ;; Font
 (set-face-attribute 'default nil
 		    :family "Hack"
